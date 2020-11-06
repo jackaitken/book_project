@@ -1,7 +1,35 @@
 {% extends "layout.html" %}
 
 {% block main %}
-<main style = index>
-    Welcome to the lesser-known book finder
+<main>
+    <div class="parent-div">
+        <div class="jumbotron text-center">
+            <p class="lead">Welcome to the lesser-known book finder</p>
+                <hr class="my-4">
+            <p>Please enter at least 3 of your favorite books
+                and we will find for you at least 3 more books that you may not have discovered.</p>
+        </div>
+    </div>
+
+
+    <div class="container" style="padding: 15px;>
+        <form>
+            <div class="md-form">
+                <label>Book 1</label>
+                <input type="search" class="form-control mdb-autocomplete" id="book1">
+                <label>Book 2</label>
+                <input type="search" class="form-control mdb-autocomplete" id="book2">
+                <label>Book 3</label>
+                <input type="search" class="form-control mdb-autocomplete" id="book3">
+                <label>Book 4</label>
+                <input type="search" class="form-control mdb-autocomplete" id="book4">
+                <label>Book 5</label>
+                <input type="search" class="form-control mdb-autocomplete" id="book5">
+            </div>
+        </form>
+    </div>
+    <div class="container">
+        <input type="submit" class="btn btn-default border border-dark" value="Find books!">
+    </div>
 </main>
 {% endblock %}
