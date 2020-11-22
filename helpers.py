@@ -1,27 +1,13 @@
-import os
 import requests
-import urllib.parse
 import config
 from flask import redirect, render_template, request
+import pprint
 
-def bookLookUp(title, author, api_key):
+def bookLookUp(api_key, title, author):
     # contact API
-    try:
-        api_key = config.api_key
-        title = request.form.get('title')
-        author = request.form.get('author')
-        response = requests.get("https://www.goodreads.com/book/title.xml?author={}&key={}&title={}".format(author,api_key,title)
-        response.raise_for_status()
-    except requests.RequestException:
-        return None
-
+        r = requests.get("https://www.googleapis.com/books/v1/volumes?q={}&{}&key={}".format(title, author, api_key))
     # Parse response
-    try:
-        information = response.json()
-        return {
-            "average_rating": information["average_rating"],
-            "ratings_sum": information["ratings_sum"]),
-        }
-    except (KeyError, TypeError, ValueError):
-        return None
+        return r.json()
 
+
+       

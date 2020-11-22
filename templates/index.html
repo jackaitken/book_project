@@ -2,22 +2,28 @@
 
 {% block main %}
 <main>
-    <div class="parent-div">
+    <div class="parent-div container">
         <div class="jumbotron text-center">
-            <p class="lead">Welcome to the lesser-known book finder</p>
+            <p class="lead">Welcome to Book Finder</p>
                 <hr class="my-4">
-            <p>Please enter at least 3 of your favorite books
-                and we will find for you at least 3 more books that you may not have discovered.</p>
+            <p>Let us help you find a book</p>
         </div>
     </div>
-    <form action="/" method="post">
-        <div class="form-group">
-            <input class="form-control" name="title" placeholder="Title" type="text">
+    <div class="row justify-content-center align-items-center" style="font-size: 2rem;">
+        <p>Give us an old favorite and we'll find you a new book to read</p>
+    </div>
+    <form action="/book_find" method="post">
+        <div class="row justify-content-center align-items-center" style="padding-left: 7rem; padding-right: 7rem;">
+          <div class="col">
+            <input type="text" class="form-control" placeholder="Title" name="title">
+          </div>
+          <div class="col">
+            <input type="text" class="form-control" placeholder="Author" name="author">
+          </div>
         </div>
-        <div class="form-group">
-            <input class="form-control" name="author" placeholder="Author" type="text">
+        <div class="row justify-content-center align-items-center" style="padding-top: 3rem;">
+            <button type="submit" class="btn btn-default border border-dark ">Find a book!</button>
         </div>
-        <button type="submit" class="btn btn-default border border-dark">Find books!</button>
     </form>
 </main>
 {% endblock %}
