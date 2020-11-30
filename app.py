@@ -35,22 +35,28 @@ def book_find():
                 counter += 1
         
 
-        return render_template("book_find.html", items = items, listToString = listToString, category = category)
+        return render_template("book_find.html", items = items, listToString = listToString, 
+                                category = category)
 
-@app.route('/apology', methods=["GET", "POST"])
+@app.route('/apology')
 def apology():  
     return render_template("apology.html")
 
 @app.route('/new_book', methods=["GET", "POST"])
 def new_book():
-    href = request.form.get('book')
-    href = requests.get("https://www.googleapis.com/books/v1/volumes?q={}".format(category))
-    items = href.json()["items"]
-    total_items = r.json()["totalItems"]
+    if request.method == "POST":
+        api_key = config.api_key
+        href = request.form.get("new_book")
+        href = requests.get("https://www.googleapis.com/books/v1/volumes?q={}&key={}&maxResults=40".format(href, api_key))
+        items = href.json()["items"]
 
-    random_book = items[random.randint(0, total_items)]["volumeInfo"]
-    random_book_title = random_book["title"]
-    random_book_author = random_book["authors"]
+        random_book_number = random.randint(0, 40)
+        random_book = items[random_book_number]["volumeInfo"]
+        random_book_title = random_book["title"]
+        random_book_author = random_book["authors"]
+        book_link = random_book["infoLink"]
 
-    return render_template("new_book.html", title = random_book_title, author = random_book_author)
+        return render_template("new_book.html", title = random_book_title, 
+                                author = random_book_author, listToString = listToString,
+                                book_link = book_link)
 

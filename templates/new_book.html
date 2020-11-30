@@ -5,8 +5,9 @@
     <h1 class="book-list-heading">
         Based on your book selection, we think you should read:
     </h1>
-    <p>
-        {{ random_book_title }} Written by: {{ listToString(random_book_author) }}
-    </p>
+    <div class="container">
+        <h3><a href="{{ book_link }}">{{ title }}</a></h3> 
+        <h4>Written by: {{ listToString(author) }}</h4>
+    </div>
 </div>
 {% endblock %}

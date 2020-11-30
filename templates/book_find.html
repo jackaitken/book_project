@@ -9,11 +9,12 @@
         <ul>
         {% for row in items %}
            <li>
-               <form method="post" action="/new_book"> 
-                    <button id="book" name="book">{{ ["volumeInfo"]["title"] }}</button>
+                <p><strong>Title: </strong>{{ row["volumeInfo"]["title"] }} </p>
+                <p><strong>Published: </strong>{{ row["volumeInfo"]["publishedDate"] }} </p>
+                <p><strong>Written by: </strong> {{ listToString(row["volumeInfo"]["authors"]) }}</p>
+                <form method="post" action="/new_book">
+                    <button type="submit" class="btn btn-default border border-dark " name="new_book" id="new_book" value="{{ listToString(category) }}">Search based on this book</button>
                 </form>
-                    <p><strong>Published: </strong>{{ row["volumeInfo"]["publishedDate"] }} </p>
-                    <p><strong>Written by: </strong> {{ listToString(row["volumeInfo"]["authors"]) }}</p>
             </li>
         {% endfor %} 
         </ul>
