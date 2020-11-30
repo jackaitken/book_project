@@ -2,7 +2,21 @@
 
 {% block main %}
 <div class="container">
-    {{ book_to_parse }}
-    {{ published_year }}
+    <h1 class="book-list-heading">
+        We found results for:
+    </h1>
+    <p>
+        <ul>
+        {% for row in items %}
+           <li>
+               <form method="post" action="/new_book"> 
+                    <button id="book" name="book">{{ ["volumeInfo"]["title"] }}</button>
+                </form>
+                    <p><strong>Published: </strong>{{ row["volumeInfo"]["publishedDate"] }} </p>
+                    <p><strong>Written by: </strong> {{ listToString(row["volumeInfo"]["authors"]) }}</p>
+            </li>
+        {% endfor %} 
+        </ul>
+    </p>
 </div>
 {% endblock %}

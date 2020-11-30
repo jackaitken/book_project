@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+
+{% block main %}
+<div class="container">
+    <h1 class="book-list-heading">
+        Based on your book selection, we think you should read:
+    </h1>
+    <p>
+        {{ random_book_title }} Written by: {{ listToString(random_book_author) }}
+    </p>
+</div>
+{% endblock %}

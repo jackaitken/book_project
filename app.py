@@ -1,7 +1,8 @@
 from flask import Flask, render_template, request, redirect
 import requests
 import config
-import pprint
+from helpers import listToString
+import random
 
 app = Flask(__name__)
 
@@ -13,32 +14,43 @@ def index():
         return render_template("book_find.html")
 
 @app.route('/book_find', methods=["GET", "POST"])
-def test():
+def book_find():
     api_key = config.api_key
-    title = request.form.get('title')
-    author = request.form.get('author')
-    
-    # contact API
-    r = requests.get("https://www.googleapis.com/books/v1/volumes?q={}&{}&key={}".format(title, author, api_key))
-    
-    # Parse response
-    parsed_response = r.json()
+    title = request.form.get('title').lower()
+    author = request.form.get('author').lower()
 
-    published_year = '3000'
-    items = parsed_response["items"]
-    counter = 0
+    if not title and author:
+        return render_template ("apology.html")
+    else: 
+        r = requests.get("https://www.googleapis.com/books/v1/volumes?q={}&{}&key={}".format(title, author, api_key))
 
-    for entry in items:
-        year = items[counter]["volumeInfo"]["publishedDate"]
-        if title = items[counter]["volumeInfo"]["title"]
-            if year < published_year:
-                published_year = year
-                book_to_parse = items[counter]["volumeInfo"]
+        # Parse response
+        items = r.json()["items"]
+        counter = 0
+        for row in items:
+            try:
+                category = items[counter]["volumeInfo"]["categories"]
                 counter += 1
-            else:
+            except KeyError:
                 counter += 1
+        
 
-    print(book_to_parse)
-    print(published_year)
+        return render_template("book_find.html", items = items, listToString = listToString, category = category)
 
-    return render_template("book_find.html", book_to_parse = book_to_parse, published_year = published_year)
+@app.route('/apology', methods=["GET", "POST"])
+def apology():  
+    return render_template("apology.html")
+
+@app.route('/new_book', methods=["GET", "POST"])
+def new_book():
+    href = request.form.get('book')
+    href = requests.get("https://www.googleapis.com/books/v1/volumes?q={}".format(category))
+    items = href.json()["items"]
+    total_items = r.json()["totalItems"]
+
+    random_book = items[random.randint(0, total_items)]["volumeInfo"]
+    random_book_title = random_book["title"]
+    random_book_author = random_book["authors"]
+
+    return render_template("new_book.html", title = random_book_title, author = random_book_author)
+
